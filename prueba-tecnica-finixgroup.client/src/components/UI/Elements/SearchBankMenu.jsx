@@ -26,17 +26,18 @@ export default function SearchBankMenu({dispatch}) {
     return (
         <Wrapper className="container">
             <FormBox>
+            
+                    <FormTitle><h1 className='font30 semiBold'>Search by Id or GUID</h1></FormTitle>
                 <BankForm onSubmit={handleSearchSubmit}>
                     <DropdownBox>
-                        <label htmlFor="searchBy">Search</label>
-                        <select name="searchBy" id="searchBy">
+                        
+                        <select className="font18" name="searchBy" id="searchBy">
                             <option value="byId">By ID</option>
                             <option value="byGuid">By GUID</option>
                         </select>
                     </DropdownBox>
                     <InputsBox>
-                        <label htmlFor="searchInput"></label>
-                        <input type="text" id="searchInput" name="searchInput" required></input>
+                        <input className="font18" type="text" id="searchInput" name="searchInput" placeholder='Enter key here'required></input>
                     </InputsBox>
                     <ButtonBox>
                         <FullButton color="#606060" title="Search"></FullButton>
@@ -53,33 +54,42 @@ const Wrapper = styled.section`
   padding-top:5%;
 `;
 
+const FormTitle = styled.div`
+text-align:center;
+`;
+
 const FormBox = styled.div`
   display:flex;
+  flex-direction:column;
   justify-content:center;
-  padding:5%;
+    margin:2%;
 `;
 
 const DropdownBox = styled.div`
-padding:2%;
+margin:2%;
 display:flex;
 flex-direction:row;
-  label{
-      margin:auto;
-      padding-right:5%;
-  }
+select{
+    min-width:150px;
+    text-align: center; 
+}
 `;
 const InputsBox = styled.div`
-padding:2%;
+margin:2%;
 display:flex;
 flex-direction:row;
-    padding:2%;
+input{
+    min-width:250px;
+    text-align: center; 
+}
+
 `;
 
 const ButtonBox = styled.div`
-padding:2%;
+margin:2%;
 display:flex;
 flex-direction:row;
-    padding:2%;
+
 `;
 
 

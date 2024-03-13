@@ -32,14 +32,9 @@ export default function Header() {
         
         <BankListSection className="flexCenter">
               <Title className="font30 semiBold">Banks</Title>
-              {status === 'loading' && <div>Loading...</div>} {/* Display loading indicator */}
-              {status === 'failed' && <div>Error fetching banks</div>} {/* Display error message */}
-              {/*
-              {bankList && bankList.map((bank) => (
-                  <div key={bank.id}>{bank.bank_name}</div>
-              ))}
-                */ }
-              {!bankList && status !== 'loading' && <div>No available banks</div>} {/* Display message when no banks available */}
+              {status === 'loading' && <div>Loading...</div>} 
+              {status === 'failed' && <div>Error fetching banks</div>}
+              {!bankList && status !== 'loading' && <div>No available banks</div>}
               <BankListTable bankList={bankList} />
         </BankListSection>
 
@@ -67,7 +62,6 @@ const BankListSection = styled.section`
   padding: 5%;
   min-height:800px;
   @media (max-width: 760px) {
-    flex-direction: column-reverse;
   }
 `;
 

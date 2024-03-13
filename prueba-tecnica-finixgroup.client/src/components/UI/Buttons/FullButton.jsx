@@ -24,7 +24,7 @@ function darkerColor(color){
   return "#" + newColor.toString(16);
 }
 
-export default function FullButton({ title, action, border, color, type, form, value, className}) {
+export default function FullButton({ title, action, border, color, type, form, value, className, disabled}) {
   return (
     <Wrapper border={border} color={color}>
       <button
@@ -33,6 +33,7 @@ export default function FullButton({ title, action, border, color, type, form, v
         type={type}
         form={form}
         value={value}
+        disabled={disabled}
       >        
         {value ? value : title}
       </button>

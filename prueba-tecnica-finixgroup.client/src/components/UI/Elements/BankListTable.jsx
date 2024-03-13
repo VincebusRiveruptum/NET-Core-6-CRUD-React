@@ -7,6 +7,8 @@ import RemoveBankModal from './RemoveBankModal';
 export default function BankListTable({ bankList }) {
     const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
+    const [visibleRemoveModalForBank, setVisibleRemoveModalForBank] = useState(null);
+    const [visibleModifyModalForBank, setVisibleModifyModalForBank] = useState(null);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -14,12 +16,12 @@ export default function BankListTable({ bankList }) {
 
     const totalPages = Math.ceil(bankList.length / itemsPerPage);
 
-    const handleRemove = () => {
-        setVisibleRemoveModal(true);
+    const handleRemove = (bank) => {
+        setVisibleRemoveModalForBank(bank.id);
     }
 
-    const handleModify = () => {
-        setVisibleModifyModal(true);
+    const handleModify = (bank) => {
+        setVisibleRemoveModalForBank(bank.id);
     }
 
     return (
@@ -39,23 +41,22 @@ export default function BankListTable({ bankList }) {
                                 <td>{bank.id}</td>
                                 <td>{bank.bank_name}</td>
                                 <td>
-                                    <FullButton action={() => handleRemove()} color="#505050" title="Remove"></FullButton>
-                                    <FullButton action={() => handleModify()} color="#505050" title="Modify"></FullButton>
-                                    <ModifyModal bank={bank} />
-                                    <RemoveBankModal bank={bank} />
+                                    <FullButton action={() => handleRemove(bank)} color="#505050" title="Remove"></FullButton>
+                                    <FullButton action={() => handleModify(bank)} color="#505050" title="Modify"></FullButton>
+                                    { visibleModifyModalForBank === bank.id ? <ModifyModal onClose={ () => setVisibleModifyModalForBank(null) } bankItem={bank}/> : ""}
+                                    { visibleRemoveModalForBank === bank.id ? <RemoveBankModal onClose={ () => setVisibleRemoveModalForBank(null) }bankItem={bank}/> : ""}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
             </TableBox>
-
             <PaginationBox>
                 <Title className="font18 semiBold">Showing { itemsPerPage } results of { bankList.length - 1 }</Title>
                 <Pagination>                   
-                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                    <span>{currentPage} / {totalPages}</span>
-                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+                    <FullButton action={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} color="#505050" title="Previous Page"></FullButton>
+                    <span className="font16 semiBold">{currentPage} - {totalPages}</span>
+                    <FullButton action={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages} color="#505050" title="Next Page"></FullButton>
                 </Pagination>
             </PaginationBox>
         </Wrapper>
@@ -87,7 +88,7 @@ const Table = styled.table`
 
 const Title = styled.div`
   display: flex;
-      justify-content: center;
+    justify-content: center;
   @media (max-width: 760px) {
     justify-content: center;
   }
@@ -106,11 +107,5 @@ const PaginationBox = styled.div`
 const Pagination = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 10px;
 
-    button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
 `;
