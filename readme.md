@@ -1,58 +1,25 @@
-TODO: 
+Para esta prueba técnica se utilizó el siguiente stack:
 
-BACK
-	- Crear Proyecto React + ASP.NET Core 6				OK
-	- Conectar SQLite al servidor :					OK
+- Back End :
+	- ASP.NET Core 6.0
+ 	- Entity Framework para la interacción con la base de datos y los controladores.
+    	- HttpClass para la conexión de la API random: Se escogió esta libreria para conectar a la API Random por ser el mas usual y recomendado por Microsoft.
+    	- Swagger para la documentación de los métodos de la API: Swagger venía junto a la plantilla de Proyecto React + ASP Net Core de Visual Studio Community por lo que su uso fue sencillo.
+    	- SQLite para el motor de base de datos, junto con DB Browser para visualizar los cambios de la base de datos.
+- Front End:
+ 	- React + Redux y Hooks 
+     	- Axios para las conexión a la API
+        - Styled Components para estilo de la app, se escogió esta libreria ya que es la que considero la mas fácil y rapida de manejar.
+- IDE:
+  	- Visual Studio Community
+  
+La app esta programada completamente en inglés y contiene algunos comentarios.
+ 
+Para ejecutar el proyecto hay que instalar las dependencias del codigo del cliente y el servidor, para ello simplemente utilizar npm i y dotnet restore, respectivamente.
 
-		- Para el ORM se utilizará Entity Framework 6 con SQLite
-	
-			dotnet add package Microsoft.EntityFrameworkCore --version 6.0.0
+El seeding se realiza durante la primera migración, sin embargo se adjunta el archivo db en caso de algún inconveniente.
 
-		- Instalacion de SQlite
-	
-			dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 6.0.0
-	
-		- Instalación de EF Core Micrations
-	
-			dotnet tool install -g dotnet-ef
-	
-		- Instalacion de EF Core Desing
-	
-			dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.0
-
-		- Generación de Migraciones
-
-			dotnet ef migrations add InitialCreate
-			dotnet ef database update
-
-	- Crear Entities y Migraciones					OK
-		- Banks							OK
-	- Implementar consumo de api random				OK, CORREGIR
-		- Seeding						MEH
-		- Utilizar HttpClient Class				MEH
-	- Implementar controladores					OK	
-		- Implementar solicitudes REST				OK
-			- REVISAR
-	- ELIMINAION LÓGICA
-		- FECHA DE MODIFCIACION Y ELIMINACION
-
-FRONT
-	- Escojer una plantilla 					OK
-	- Implementar vista principal					OK
-			- Agregar
-			- Editar
-			- Eliminar de forma lógica
-	- Axios									OK
-	- STORE								OK
-	- CONECTAR API A FRONT						OK
-	- IMPLEMENTAR BUSQUEDA POR GUID O ID
-	- IMPLEMENTAR AGREGAR
-	- IMPLEMNTAR ELIMINAR LOGICAMENTE
-		- IMPLEMENTAR FLAG DE ELIMINACIÓN CON FECHA
-	- IMPLEMENTAR MODIFICACIÓN
-		- IMPLEMENTAR FLAG DE MODIFICACIÓN
-	- IMPLEMENTAR ESTILO
-	- IMPLEMENTAR PAGINACIÓN
+Hecha por Vicente Riveros Garay, 2024.
 
 
 	
