@@ -36,12 +36,16 @@ namespace prueba_tecnica_finixgroup.Server.Controllers {
 
         [HttpPost]
         public IActionResult AddBank(Bank bank) {
-            if(bank != null) { 
-                _dataContext.Banks.Add(bank);
-                _dataContext.SaveChanges();
-                return CreatedAtAction(nameof(GetBankById), new { id = bank.id }, bank);
+            if(ModelState.IsValid) {
+                if(bank != null) {
+                    _dataContext.Banks.Add(bank);
+                    _dataContext.SaveChanges();
+                    return CreatedAtAction(nameof(GetBankById), new { id = bank.id }, bank);
+                } else {
+                    return BadRequest();
+                }
             } else {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
         }
 

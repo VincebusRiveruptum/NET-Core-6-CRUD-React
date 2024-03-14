@@ -86,9 +86,9 @@ export const deleteById = async (id) => {
     }
 }
 
-// UUID GENERATION
+// UUID GENERATION JUST FOR TESTING
 
-export const generateUUID = () => { // Public Domain/MIT
+export const generateUUID = () => {
     var d = new Date().getTime();//Timestamp
     var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

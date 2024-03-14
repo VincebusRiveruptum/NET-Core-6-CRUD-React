@@ -1,6 +1,7 @@
 namespace prueba_tecnica_finixgroup.Helpers;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using prueba_tecnica_finixgroup.Server.Models;
 using System.Net.Http;
 using System.Text.Json;
@@ -16,18 +17,28 @@ public class DataContext : DbContext{
     protected override void OnConfiguring(DbContextOptionsBuilder options){
         // in memory database used for simplicity, change to a real db for production applications
         options.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
+        options.EnableSensitiveDataLogging();
     }
 
     // Fix banks validation but outside this method, just a temporal quick and dirty solution...
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
-        /*
-        if(!Banks.Any()) {
-            modelBuilder.Entity<Bank>().HasData(
-                Seed()
-             );         
-        }
-        */
+
+        // Generating unique id and GUID
+        modelBuilder.Entity<Bank>()
+            .Property(b => b.id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Bank>()
+            .Property(b => b.uid)
+            .HasConversion(
+                v => v.ToString(),
+                v => Guid.Parse(v))
+            .HasDefaultValueSql("lower(hex(randomblob(16)))") // SQLite: Generate a random GUID
+            .ValueGeneratedOnAdd();
+
+        // Seeding
+        modelBuilder.Entity<Bank>().HasData(Seed());       
     }
  
     public Bank[] Seed() {
@@ -51,6 +62,5 @@ public class DataContext : DbContext{
             }
         }
     }
-
     public DbSet<Bank> Banks { get; set; }
 }
