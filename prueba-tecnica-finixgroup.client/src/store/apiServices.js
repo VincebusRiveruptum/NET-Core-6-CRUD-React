@@ -36,54 +36,52 @@ export const addBank = async ({ id, uid, account_number, iban, bank_name, routin
         throw error;
     }
 };
+
+
 // PUT {id}
-
-
-export const putByID =  async (id, uid, account_number, iban, bank_name, routing_number, swift_bic) => {
+export const putByID = async ({id, uid, account_number, iban, bank_name, routing_number, swift_bic}) => {
     console.log("This is the front address: " + API_URL);
     try {
-        axios.put(`${API_URL}/api/Bank/${id}`, {
-            id:id,
-            uid:uid,
-            account_number:account_number,
-            iban:iban,
-            bank_name:bank_name,
-            routing_number:routing_number,
-            swift_bic:swift_bic
-        })
-        .then((response) => {
-            return response;
-        })        
+        const response = await axios.put(`${API_URL}/api/Bank/${id}`, {
+            id: id,
+            uid: uid,
+            account_number: account_number,
+            iban: iban,
+            bank_name: bank_name,
+            routing_number: routing_number,
+            swift_bic: swift_bic
+        });
+        
+        return response.data; // Assuming you want to return the data from the response
     } catch (error) {
-        console.error(`Error modifying entry ${id} :' ${error}`);
+        console.error(`Error modifying entry ${id}: ${error}`);
         throw error;
     }
 }
 
 // GET {id}
-
-export const getByID =  async (id) => {
+export const getByID = async (id) => {
     console.log("This is the front address: " + API_URL);
     try {
         const response = await axios.get(`${API_URL}/api/Bank/${id}`);
-        console.log(response.data);
-        return response.data;
+        console.log(response.data); // Logging response data
+        return response.data; // Returning response data
     } catch (error) {
-        console.error(`Error fetching bank with id: ${id} :' ${error}`);
+        console.error(`Error fetching bank with id: ${id}: ${error}`);
         throw error;
     }
 }
 
 // DELETE {id}
 
-export const deleteById =  async (id) => {
+export const deleteById = async (id) => {
     console.log("This is the front address: " + API_URL);
     try {
         const response = await axios.delete(`${API_URL}/api/Bank/${id}`);
-        console.log(response.data);
-        return response.data;
+        console.log(response.data); // Logging response data
+        return response.data; // Returning response data
     } catch (error) {
-        console.error(`Error deleting entry with id: ${id} :' ${error}`);
+        console.error(`Error deleting entry with id: ${id}: ${error}`);
         throw error;
     }
 }

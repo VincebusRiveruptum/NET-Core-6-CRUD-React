@@ -1,23 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function ModifyModal({ bankItem, onClose, onRemove }) {
+import {putByID} from "../../../store/apiServices";
+
+export default function ModifyModal({ bankItem, onClose}) {
+    const onModify = (e) => {
+        e.preventDefault();
+
+        let newName = document.getElementById("nameInput").value;
+        let request = { id: bankItem.id, bank_name: newName };
+        putByID(request)
+            .then((response) => {
+                console.log(response);
+                // If modification is successful, trigger page refresh
+                window.location.reload();
+            })
+            .catch((error) => {
+                // Handle error if modification fails
+                console.error('Error modifying bank:', error);
+            });
+    };
+
     return (
         <ModalOverlay>
             <ModalContent>
                 <h2>Modify Bank</h2>
                 <p>ID: {bankItem.id}</p>
                 <p>Bank Name: {bankItem.bank_name}</p>
-                <hr></hr>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-              <Button onClick={onRemove}>Modify</Button>
-            </ModalFooter>
-          </ModalContent>
-      </ModalOverlay>
-  );
+                <ModifyInput>
+                    <input className="font18" type="text" placeholder="New bank name" id="nameInput" required />
+                </ModifyInput>
+                <hr />
+                <ModalFooter>
+                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={(e) => onModify(e)}>Modify</Button>
+                </ModalFooter>
+            </ModalContent>
+        </ModalOverlay>
+    );
 }
 
+const ModifyInput = styled.div`
+    padding-top:5%;
+    padding-bottom:5%;
+    input{
+        min-width:250px;
+        text-align: center; 
+    }
+`;
 const ModalOverlay = styled.div`
 position: fixed;
 top: 0;

@@ -19,16 +19,19 @@ export default function ApiTestingControl(){
     }
 
     const handlePutByID = () => {
-        const response =putByID();
+        let request = {id:123, uid: "3fa85f64-5717-4562-b3fc-2c963f66afa6", account_number:"12345", iban:"123456", bank_name:"Deploying Bank Co.", routing_number:"12345678", swift_bic:"ABC"}
+        let response =putByID(request);
         console.log(response);
     }
     const handleGetByID = () => {
-        const response =getByID();
+        let request = {id:123}
+        let response =getByID(request);
         console.log(response);
     }
 
     const handleDeleteById = () => {
-        const response =deleteById();
+        let request = 123;
+        const response =deleteById(request);
         console.log(response);
     }
 

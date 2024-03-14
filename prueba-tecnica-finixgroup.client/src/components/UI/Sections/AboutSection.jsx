@@ -20,7 +20,7 @@ export default function AboutSection() {
           </p>
           <p className="font14">
             <br />
-            <h1 class="font20 semiBold">Back End</h1>
+            <h1 className="font20 semiBold">Back End</h1>
             <li>
               ASP.NET Core 6.0 with Entity Framework ORM for interaction with the
               database and controllers.
@@ -40,13 +40,13 @@ export default function AboutSection() {
               database changes.
             </li>
             <br />
-            <h1 class="font20 semiBold">Front End</h1>
+            <h1 className="font20 semiBold">Front End</h1>
             <li>React + Redux and Axios for API connection.</li>
             <li>
               Styled Components for app styling, this library was chosen because i consider it the easiest and fastest to handle.
             </li>
             <br />
-            <h1 class="font20 semiBold">IDE</h1>
+            <h1 className="font20 semiBold">IDE</h1>
             <li>Visual Studio Community</li>
             <li>Visual Studio Code</li>
 

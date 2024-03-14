@@ -3,6 +3,7 @@ import styled from "styled-components";
 import FullButton from "../Buttons/FullButton";
 import ModifyModal from "./ModifyModal";
 import RemoveBankModal from "./RemoveBankModal";
+import AddBankModal from "./AddBankModal";
 
 export default function BankListTable({ bankList }) {
   const itemsPerPage = 10;
@@ -11,6 +12,7 @@ export default function BankListTable({ bankList }) {
     useState(null);
   const [visibleModifyModalForBank, setVisibleModifyModalForBank] =
     useState(null);
+  const [visibleAddModalForBank, setVisibleAddModalForBank] = useState(null);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -23,11 +25,27 @@ export default function BankListTable({ bankList }) {
   };
 
   const handleModify = (bank) => {
-    setVisibleRemoveModalForBank(bank.id);
+    setVisibleModifyModalForBank(bank.id);
+  };
+
+  const handleAdd = (bank) => {
+    setVisibleAddModalForBank(true);
   };
 
   return (
     <Wrapper className="container font14">
+      <Title className="font18 semiBold">
+        Showing {currentItems.length} results of {bankList.length}
+      </Title>
+      {visibleAddModalForBank ? <AddBankModal onClose={() => setVisibleAddModalForBank(false)} /> : ""}
+      <AddButtonBox>
+        <FullButton
+          action={handleAdd}
+          color="#ff1759"
+          title="Add Bank"
+        ></FullButton>
+      </AddButtonBox>
+      <br />
       {currentItems.length ? (
         <>
           <TableBox>
@@ -116,7 +134,12 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+`;
+
+const AddButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   padding: 2%;
 `;
 
@@ -144,10 +167,9 @@ const PaginationBox = styled.div`
 const ButtonsBox = styled.div`
   display: flex;
   justify-content: center;
-  margin:auto;
-  width:50%;
+  margin: auto;
+  width: 50%;
   padding: 2%;
-  
 `;
 const Pagination = styled.div`
   display: flex;

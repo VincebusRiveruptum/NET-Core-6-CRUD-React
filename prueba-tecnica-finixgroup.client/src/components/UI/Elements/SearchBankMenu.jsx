@@ -10,8 +10,6 @@ export default function SearchBankMenu({dispatch}) {
     const handleSearchSubmit = (event) => {
         event.preventDefault();
 
-        
-
         const searchType = document.getElementById('searchBy').value;
         const idSearch = document.getElementById('searchInput').value;
    

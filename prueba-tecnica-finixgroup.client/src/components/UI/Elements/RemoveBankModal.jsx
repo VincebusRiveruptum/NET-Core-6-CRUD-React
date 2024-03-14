@@ -1,7 +1,19 @@
 import React from 'react';
 import styled from "styled-components";
+import {deleteById} from "../../../store/apiServices";
 
-export default function RemoveBankModal({ bankItem, onClose, onRemove}) {
+export default function RemoveBankModal({ bankItem, onClose}) {
+
+  const handleRemove = () => {
+    deleteById(bankItem.id)
+        .then(() => {
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error removing bank:', error);
+        });
+  };
+  
   return (
       <ModalOverlay>
           <ModalContent>
@@ -12,7 +24,7 @@ export default function RemoveBankModal({ bankItem, onClose, onRemove}) {
               <hr></hr>
             <ModalFooter>
               <Button onClick={onClose}>Close</Button>
-              <Button onClick={onRemove}>Remove</Button>
+              <Button onClick={handleRemove}>Remove</Button>
             </ModalFooter>
           </ModalContent>
       </ModalOverlay>
