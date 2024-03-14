@@ -3,14 +3,18 @@ import styled from "styled-components";
 import FullButton from '../Buttons/FullButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { getByID, getByGUID } from '../../../store/bankSlice'; // Import your action creators
+import { fetchBanksAsync } from '../../../store/bankSlice'; 
 
 export default function SearchBankMenu({dispatch}) {
     
     const handleSearchSubmit = (event) => {
         event.preventDefault();
 
+        
+
         const searchType = document.getElementById('searchBy').value;
         const idSearch = document.getElementById('searchInput').value;
+   
 
         if (searchType === 'byId') {
             //Call store to show element by Id
@@ -40,7 +44,7 @@ export default function SearchBankMenu({dispatch}) {
                         <input className="font18" type="text" id="searchInput" name="searchInput" placeholder='Enter key here'required></input>
                     </InputsBox>
                     <ButtonBox>
-                        <FullButton color="#606060" title="Search"></FullButton>
+                        <FullButton color="#ff1759" title="Search"></FullButton>
                     </ButtonBox>
                 </BankForm>
 

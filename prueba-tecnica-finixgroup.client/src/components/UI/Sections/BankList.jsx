@@ -1,13 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-scroll";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBanksAsync } from '../../../store/bankSlice'; 
 import BankListTable from "../Elements/BankListTable";
 import SearchBankMenu from "../Elements/SearchBankMenu";
 // Assets
-export default function Header() {
+export default function BankList() {
   const [y, setY] = useState(window.scrollY);
     const bankList = useSelector((state) => state.bankList.items);
     const status = useSelector((state) => state.bankList.status);
@@ -26,11 +25,11 @@ export default function Header() {
     }, [dispatch]);
 
   return (
-    <Wrapper id="home" className="lightBg container">
+    <Wrapper id="home" className="lightBg">
           <SearchBankMenu dispatch={dispatch}>
           </SearchBankMenu>
         
-        <BankListSection className="flexCenter">
+        <BankListSection>
               <Title className="font30 semiBold">Banks</Title>
               {status === 'loading' && <div>Loading...</div>} 
               {status === 'failed' && <div>Error fetching banks</div>}
@@ -47,28 +46,26 @@ const Wrapper = styled.section`
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    padding: 2% 0; /* Add vertical padding */
+    padding: 2%; 
     margin-top: 80px; /* Adjust for the maximum height of your navbar */
 
 `;
 
-const BankListSection = styled.section`
+const BankListSection = styled.div`
   display: flex;
-   padding:2%;
+  padding:2%;
   flex-direction:column;
   justify-content:center;
-
-  
   padding: 5%;
-  min-height:800px;
   @media (max-width: 760px) {
   }
 `;
 
 const Title = styled.div`
   display: flex;
+  justify-content: center;
   @media (max-width: 760px) {
-    justify-content: center;
+      justify-content: center;
   }
 `;
 
