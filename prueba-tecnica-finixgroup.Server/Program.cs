@@ -51,4 +51,11 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
+// Seed the data
+using(var scope = app.Services.CreateScope()) {
+    var serviceProvider = scope.ServiceProvider;
+    var dataContext = serviceProvider.GetRequiredService<DataContext>();
+    dataContext.SeedData();
+}
+
 app.Run();

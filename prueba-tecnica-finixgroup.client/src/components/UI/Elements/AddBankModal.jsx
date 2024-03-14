@@ -8,9 +8,8 @@ export default function AddBankModal({ onClose }) {
 
     const onAdd = (e) => {
         e.preventDefault();
-        let id = document.getElementById("idInput").value;
         let newName = document.getElementById("nameInput").value;
-        let request = { id: id, guid: generateUUID(), iban: Math.random().toString(), bank_name: newName, routing_number: Math.random().toString(), swift_bic: Math.random().toString() };
+        let request = {iban: Math.random().toString(), bank_name: newName, routing_number: Math.random().toString(), swift_bic: Math.random().toString() };
 
         addBank(request)
             .then((response) => {
@@ -32,7 +31,6 @@ export default function AddBankModal({ onClose }) {
             <ModalContent>
                 <h2>Add new bank</h2>
                 <AddInput>
-                    <input className="font18" type="text" placeholder="ID" id="idInput" required />
                     <input className="font18" type="text" placeholder="New bank name" id="nameInput" required />
                 </AddInput>
                 {responseMessage && <ResponseLabel success={!responseMessage.startsWith('Error')}>{responseMessage}</ResponseLabel>}

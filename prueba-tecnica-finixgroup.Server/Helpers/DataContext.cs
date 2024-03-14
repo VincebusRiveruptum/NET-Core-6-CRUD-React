@@ -36,12 +36,19 @@ public class DataContext : DbContext{
                 v => Guid.Parse(v))
             .HasDefaultValueSql("lower(hex(randomblob(16)))") // SQLite: Generate a random GUID
             .ValueGeneratedOnAdd();
-
-        // Seeding
-        modelBuilder.Entity<Bank>().HasData(Seed());       
     }
- 
-    public Bank[] Seed() {
+    public void SeedData() {
+        if(!Banks.Any()) {
+            var banks = Seed();
+            if(banks != null) {
+                Banks.AddRange(banks);
+                SaveChanges();
+            }
+        }
+    }
+
+    private Bank[] Seed() {
+        Console.WriteLine("Seeding data...");
         using(var httpClient = new HttpClient()) {
             httpClient.BaseAddress = new Uri("https://random-data-api.com/api/v2/");
             HttpResponseMessage response = httpClient.GetAsync("banks?size=100").Result;
@@ -51,11 +58,7 @@ public class DataContext : DbContext{
                 var banks = JsonSerializer.Deserialize<Bank[]>(jsonResponse);
 
                 Console.WriteLine(jsonResponse);
-                if(banks != null) {
-                    return banks;
-                } else {
-                    return null;
-                }
+                return banks;
             } else {
                 Console.WriteLine("Failed to fetch data from the API. Status code: " + response.StatusCode);
                 return null;

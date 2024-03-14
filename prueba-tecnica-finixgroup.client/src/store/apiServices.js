@@ -16,13 +16,11 @@ export const fetchBanks = async () => {
 };
 
 // POST
-export const addBank = async ({ id, uid, account_number, iban, bank_name, routing_number, swift_bic }) => {
+export const addBank = async ({account_number, iban, bank_name, routing_number, swift_bic }) => {
     // Request new ID from server, add one manually or assign on controller?
     console.log("This is the front address: " + API_URL);
     try {
         const response = await axios.post(`${API_URL}/api/Bank`, {
-            id: id,
-            uid: uid,
             account_number: account_number,
             iban: iban,
             bank_name: bank_name,
