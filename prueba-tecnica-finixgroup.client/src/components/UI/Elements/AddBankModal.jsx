@@ -1,29 +1,42 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import {addBank, generateUUID} from "../../../store/apiServices";
+import { addBank } from "../../../store/apiServices";
 
 export default function AddBankModal({ onClose }) {
+    const [bankName, setBankName] = useState('');
     const [responseMessage, setResponseMessage] = useState(null);
 
-    const onAdd = (e) => {
+    const handleAddBank = async (e) => {
         e.preventDefault();
-        let newName = document.getElementById("nameInput").value;
-        let request = {iban: Math.random().toString(), bank_name: newName, routing_number: Math.random().toString(), swift_bic: Math.random().toString() };
+        if (!bankName || bankName.trim() === '') {
+            setResponseMessage("*Please enter a valid bank name.");
+            return;
+        }
 
-        addBank(request)
-            .then((response) => {
-                console.log(response);
-                setResponseMessage("Bank added successfully!");
-                // wait at least one second so the confirmation can be readable
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            })
-            .catch((error) => {
-                console.error('Error adding bank:', error);
-                setResponseMessage("Error adding bank! : " + error.message);
-            });
+        try {
+            const request = {
+                iban: Math.random().toString(),
+                bank_name: bankName,
+                routing_number: Math.random().toString(),
+                swift_bic: Math.random().toString()
+            };
+
+            const response = await addBank(request);
+            console.log(response);
+            setResponseMessage("Bank added successfully!");
+            // wait at least one second so the confirmation can be readable
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            console.error('*Error adding bank:', error);
+            setResponseMessage("*Error adding bank! : " + error.message);
+        }
+    };
+
+    const handleChange = (e) => {
+        setBankName(e.target.value);
     };
 
     return (
@@ -31,13 +44,23 @@ export default function AddBankModal({ onClose }) {
             <ModalContent>
                 <h2>Add new bank</h2>
                 <AddInput>
-                    <input className="font18" type="text" placeholder="New bank name" id="nameInput" required />
+                    <form onSubmit={handleAddBank}>
+                        <input
+                            className="font18"
+                            type="text"
+                            placeholder="New bank name"
+                            value={bankName}
+                            onChange={handleChange}
+                            minLength={4}
+                            required
+                        />
+                    </form>
                 </AddInput>
-                {responseMessage && <ResponseLabel success={!responseMessage.startsWith('Error')}>{responseMessage}</ResponseLabel>}
+                {responseMessage && <ResponseLabel success={!responseMessage.startsWith('*')}>{responseMessage}</ResponseLabel>}
                 <hr />
                 <ModalFooter>
                     <Button onClick={onClose}>Cancel</Button>
-                    <Button onClick={(e) => onAdd(e)}>Add</Button>
+                    <Button onClick={handleAddBank}>Add</Button>
                 </ModalFooter>
             </ModalContent>
         </ModalOverlay>

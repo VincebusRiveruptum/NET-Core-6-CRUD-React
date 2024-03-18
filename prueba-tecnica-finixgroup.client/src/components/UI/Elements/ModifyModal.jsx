@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { useState } from 'react';
 import {putByID} from "../../../store/apiServices";
 
-export default function ModifyModal({ bankItem, onClose}) {
+export default function ModifyModal({ bankItem, onClose }) {
+    const [responseMessage, setResponseMessage] = useState(null);
+
     const onModify = (e) => {
         e.preventDefault();
 
         let newName = document.getElementById("nameInput").value;
+
+        if (!newName || newName.trim() === '') {
+            setResponseMessage("*Name to modify is required");
+            return;
+        }
         let request = { id: bankItem.id, bank_name: newName };
         putByID(request)
             .then((response) => {
@@ -17,7 +24,7 @@ export default function ModifyModal({ bankItem, onClose}) {
             })
             .catch((error) => {
                 // Handle error if modification fails
-                console.error('Error modifying bank:', error);
+                setResponseMessage('*Error modifying bank:', error);
             });
     };
 
@@ -28,12 +35,15 @@ export default function ModifyModal({ bankItem, onClose}) {
                 <p>ID: {bankItem.id}</p>
                 <p>Bank Name: {bankItem.bank_name}</p>
                 <ModifyInput>
-                    <input className="font18" type="text" placeholder="New bank name" id="nameInput" required />
+                    <form id="modifyForm" onSubmit={ (e) => onModify(e)}>
+                        <input className="font18" type="text" placeholder="New bank name" id="nameInput"/>
+                    </form>
                 </ModifyInput>
+                {responseMessage && <ResponseLabel success={!responseMessage.startsWith('*')}>{responseMessage}</ResponseLabel> }
                 <hr />
                 <ModalFooter>
                     <Button onClick={onClose}>Close</Button>
-                    <Button onClick={(e) => onModify(e)}>Modify</Button>
+                    <Button form="modifyForm">Modify</Button>
                 </ModalFooter>
             </ModalContent>
         </ModalOverlay>
@@ -60,6 +70,11 @@ justify-content: center;
 align-items: center;
 z-index: 999;
 `;
+
+const ResponseLabel = styled.p`
+    color: ${({ success }) => (success ? 'green' : 'red')};
+`;
+
 
 const ModalContent = styled.div`
 background-color: white;

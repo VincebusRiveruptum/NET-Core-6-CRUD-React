@@ -12,7 +12,10 @@ export default function SearchBankMenu({dispatch}) {
 
         const searchType = document.getElementById('searchBy').value;
         const idSearch = document.getElementById('searchInput').value;
-   
+
+        if (!idSearch || idSearch.trim() === '') {
+            window.location.reload();           // Reload page when an empty search query is done
+        }
 
         if (searchType === 'byId') {
             //Call store to show element by Id
@@ -39,7 +42,7 @@ export default function SearchBankMenu({dispatch}) {
                         </select>
                     </DropdownBox>
                     <InputsBox>
-                        <input className="font18" type="text" id="searchInput" name="searchInput" placeholder='Enter key here'required></input>
+                        <input className="font18" type="text" id="searchInput" name="searchInput" placeholder='Enter key here'></input>
                     </InputsBox>
                     <ButtonBox>
                         <FullButton color="#ff1759" title="Search"></FullButton>

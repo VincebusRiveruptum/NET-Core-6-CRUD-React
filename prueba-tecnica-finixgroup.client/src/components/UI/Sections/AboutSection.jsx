@@ -15,7 +15,7 @@ export default function AboutSection() {
         <Title>
           <h1 className="font30 semiBold">About this app</h1>
           <p className="font14">
-            This technical test was made by Vincebus Riveruptum using the
+            This technical test was made by Vicente Riveros Garay using the
             following stack:
           </p>
           <p className="font14">
