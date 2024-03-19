@@ -21,7 +21,7 @@ namespace prueba_tecnica_finixgroup.Server.Controllers {
 
         [HttpGet]
         public IActionResult GetAllBanks() {
-            var banks = _dataContext.Banks.ToList();
+            var banks = _dataContext.Banks.Where(b => b.DeletedAt == null);
             return Ok(banks);
         }
 
@@ -38,6 +38,7 @@ namespace prueba_tecnica_finixgroup.Server.Controllers {
         public IActionResult AddBank(Bank bank) {
             if(ModelState.IsValid) {
                 if(bank != null) {
+                    bank.CreatedAt = DateTime.Now;
                     _dataContext.Banks.Add(bank);
                     _dataContext.SaveChanges();
                     return CreatedAtAction(nameof(GetBankById), new { id = bank.id }, bank);
@@ -59,7 +60,7 @@ namespace prueba_tecnica_finixgroup.Server.Controllers {
             existingBank.bank_name = updatedBank.bank_name;
             existingBank.account_number = updatedBank.account_number;
             existingBank.routing_number = updatedBank.routing_number;
-
+            existingBank.UpdatedAt = DateTime.UtcNow;
             _dataContext.SaveChanges();
 
             return NoContent();
@@ -72,7 +73,7 @@ namespace prueba_tecnica_finixgroup.Server.Controllers {
                 return NotFound();
             }
 
-            _dataContext.Banks.Remove(bankToDelete);
+            bankToDelete.DeletedAt = DateTime.UtcNow;
             _dataContext.SaveChanges();
 
             return NoContent();

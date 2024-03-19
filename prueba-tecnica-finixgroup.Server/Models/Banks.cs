@@ -7,5 +7,11 @@
         public string? bank_name { get; set; }
         public string? routing_number { get; set; }
         public string? swift_bic { get; set; }
+        
+        // Timestamps, could use herency next time.
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set;}
+        public DateTime? DeletedAt { get; set; } 
+        
     }
 }

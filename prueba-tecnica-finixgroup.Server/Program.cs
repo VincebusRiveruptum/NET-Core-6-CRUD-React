@@ -52,10 +52,19 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 // Seed the data
+
 using(var scope = app.Services.CreateScope()) {
-    var serviceProvider = scope.ServiceProvider;
-    var dataContext = serviceProvider.GetRequiredService<DataContext>();
-    dataContext.SeedData();
+    try {
+        var serviceProvider = scope.ServiceProvider;
+        var dataContext = serviceProvider.GetRequiredService<DataContext>();
+        dataContext.SeedData();
+    } catch(Exception ex) {
+        // Log the exception
+        Console.WriteLine("An error occurred while seeding the data:");
+        Console.WriteLine(ex.Message);
+        // Optionally, rethrow the exception if needed
+        throw;
+    }
 }
 
 app.Run();

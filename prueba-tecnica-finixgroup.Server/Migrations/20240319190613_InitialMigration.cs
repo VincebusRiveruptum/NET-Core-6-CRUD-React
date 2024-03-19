@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,7 +20,10 @@ namespace prueba_tecnica_finixgroup.Server.Migrations
                     IBAN = table.Column<string>(type: "TEXT", nullable: true),
                     bank_name = table.Column<string>(type: "TEXT", nullable: true),
                     routing_number = table.Column<string>(type: "TEXT", nullable: true),
-                    swift_bic = table.Column<string>(type: "TEXT", nullable: true)
+                    swift_bic = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "date()"),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "date()"),
+                    DeletedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
